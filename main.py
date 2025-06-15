@@ -200,9 +200,9 @@ while True:
                                         berhasil = True
                                         break
                                     else:
-                                        print(f"Data mata kuliah dengan kode [{kr.kd_matkul}] tidak ditemukan")
+                                        print(f"Data mata kuliah dengan kode [{kd_matkul}] tidak ditemukan")
                             else:
-                                print(f"Data mahasiswa dengan NIM [{kr.nim}] tidak ditemukan")
+                                print(f"Data mahasiswa dengan NIM [{nim}] tidak ditemukan")
                             if berhasil:
                                 print()
                                 break
@@ -237,8 +237,8 @@ while True:
                                         berhasil = True
                                         break
                             else:
-                                print(f"Data mata kuliah dengan kode [{kr.kd_matkul}] tidak ditemukan")
-                                print(f"Data mahasiswa dengan NIM [{kr.nim}] tidak ditemukan")
+                                print(f"Data mata kuliah dengan kode [{kd_matkul}] tidak ditemukan")
+                                print(f"Data mahasiswa dengan NIM [{nim}] tidak ditemukan")
                             if berhasil:
                                 print()
                                 break
@@ -262,9 +262,9 @@ while True:
                                     break
 
                                 else:
-                                    print(f"Data mata kuliah dengan kode [{kr.kd_matkul}] tidak ditemukan")
+                                    print(f"Data mata kuliah dengan kode [{kd_matkul}] tidak ditemukan")
                             else:
-                                print (f"Data mahasiswa dengan NIM [{kr.nim}] tidak ditemukan")
+                                print (f"Data mahasiswa dengan NIM [{nim}] tidak ditemukan")
                     case 4: # Kembali
                         break
                     case _:

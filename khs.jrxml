@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="khs" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3f635d5d-a7d7-400e-a0a1-c57221861f9d">
+	<property name="ireport.zoom" value="2.5937424601000023"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="144"/>
+	<parameter name="nim" class="java.lang.String"/>
+	<parameter name="semester" class="java.lang.String"/>
+	<parameter name="thn_akademik" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT *
+FROM mahasiswa, matkul, ambil
+WHERE mahasiswa.nim - ambil.nim
+AND matkul.kd_matkul = ambil.kd_matkul;]]>
+	</queryString>
+	<field name="nim" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nm_mahasiswa" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="kd_matkul" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nmma_matkul" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="sks" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="semester" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="thn_akademik" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="presensi" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tugas" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="uts" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="uas" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="akhir" class="java.lang.Integer">
+		<variableExpression><![CDATA[(int) (0.1 * $F{presensi} + 0.2 * $F{tugas} + 0.3 * $F{uts} + 0.4 * $F{uas})]]></variableExpression>
+	</variable>
+	<variable name="grade" class="java.lang.String">
+		<variableExpression><![CDATA[($F{presensi} < 70) ? "-" : ($V{akhir} >= 0 && $V{akhir} <= 35) ? "E" : ($V{akhir} >= 36 && $V{akhir} <= 50) ? "D" : ($V{akhir} >= 51 && $V{akhir} <= 55) ? "C-" : ($V{akhir} >= 56 && $V{akhir} <= 60) ? "C" : ($V{akhir} >= 61 && $V{akhir} <= 65) ? "C+" : ($V{akhir} >= 66 && $V{akhir} <= 70) ? "B-" : ($V{akhir} >= 71 && $V{akhir} <= 75) ? "B" : ($V{akhir} >= 76 && $V{akhir} <= 80) ? "B+" : ($V{akhir} >= 81 && $V{akhir} <= 90) ? "A-" : "A"]]></variableExpression>
+	</variable>
+	<variable name="mutu" class="java.lang.Double">
+		<variableExpression><![CDATA[$V{grade}.equals("E") ? 0.0 : $V{grade}.equals("D") ? 1.0 * $F{sks} : $V{grade}.equals("C-") ? 1.7 * $F{sks} : $V{grade}.equals("C") ? 2.0 * $F{sks} : $V{grade}.equals("C+") ? 2.3 * $F{sks} : $V{grade}.equals("B-") ? 2.7 * $F{sks} : $V{grade}.equals("B") ? 3.0 * $F{sks} : $V{grade}.equals("B+") ? 3.3 * $F{sks} : $V{grade}.equals("A-") ? 3.7 * $F{sks} : $V{grade}.equals("A") ? 4.0 * $F{sks} : 0.0]]></variableExpression>
+	</variable>
+	<variable name="sks_sum" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{sks}]]></variableExpression>
+	</variable>
+	<variable name="mutu_sum" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$V{mutu}]]></variableExpression>
+	</variable>
+	<variable name="ips" class="java.lang.String">
+		<variableExpression><![CDATA[String.format("%.2f", $V{mutu_sum} / $V{sks_sum})]]></variableExpression>
+	</variable>
+	<group name="nim">
+		<groupExpression><![CDATA[$F{nim}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="88" height="79" uuid="677045a9-d0f2-4b7d-87ac-be9771eb4260"/>
+				<imageExpression><![CDATA["C:\\Users\\hendr\\Downloads\\LOGO-ISB-1.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="141" y="8" width="414" height="20" uuid="0f41f8c8-644c-4a7a-8acd-afef04205beb"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ISB ATMA LUHUR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="28" width="414" height="20" uuid="08e6be9e-b3c7-412a-90e2-02e4a25f9dc4"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[JL JENDERAL SUDIRMAN, SELINDUNG, PANGKALPINANG]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="15" width="528" height="20" uuid="d5e35835-28c7-40b9-aebc-7f2480055806"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[KARTU HASIL STUDI]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<textField>
+				<reportElement x="61" y="11" width="100" height="20" uuid="1f0cdb61-e3b8-476c-86c2-3b7378b18701"/>
+				<textFieldExpression><![CDATA[$F{nim}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="61" y="41" width="100" height="20" uuid="5780ca01-d63d-4103-8371-56a06f209e63"/>
+				<textFieldExpression><![CDATA[$F{nm_mahasiswa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="428" y="11" width="100" height="20" uuid="2ac5d568-aa40-4d3f-9b7d-fcdcb91d5407"/>
+				<textFieldExpression><![CDATA[$F{semester}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="428" y="41" width="100" height="20" uuid="47168128-de09-4f80-a6f6-d613d4d8e928"/>
+				<textFieldExpression><![CDATA[$F{thn_akademik}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="11" width="51" height="20" uuid="4fdd9a3c-ecdc-42a2-8307-53e273ca91a5"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[NIM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="41" width="51" height="20" uuid="50b2b6b6-ddbf-47d1-b0ff-bc4f92c57b6c"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nama:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="320" y="11" width="51" height="20" uuid="3254e8f6-a265-4975-94e8-521ce2863f9b"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Semester:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="320" y="41" width="82" height="20" uuid="8fd627b3-04d4-40a6-b4af-4eb99d27c568"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tahun Akademik:]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<rectangle>
+				<reportElement x="14" y="0" width="37" height="20" uuid="099bf324-30e3-4389-8c3c-27e562f259a0"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="51" y="0" width="207" height="20" uuid="10d53ed0-6600-4c71-b137-b157847aa900"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="258" y="0" width="40" height="20" uuid="cd8f8f70-1d36-46c1-a198-adddeb47ef9a"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="298" y="0" width="52" height="20" uuid="69af4f72-a286-46eb-aefc-bf8f9f3d7089"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="350" y="0" width="40" height="20" uuid="a0ee325d-7052-4fe3-a23e-028c7291ab54"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="428" y="0" width="40" height="20" uuid="d5183375-b722-4882-8d24-6d909d95f5ac"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="388" y="0" width="40" height="20" uuid="3d1770c9-3eea-4291-a65f-df6f677a5037"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="468" y="0" width="47" height="20" uuid="0a4a533e-36fb-4f92-9ce0-ae6449bf9215"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="515" y="0" width="40" height="20" uuid="2d55444b-34fb-454c-a467-d5c6c649a851"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="298" y="20" width="52" height="20" uuid="94bd3734-4ad7-4c29-b22b-f58936989558"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="14" y="20" width="37" height="20" uuid="d3d2cdb6-957e-476c-ae48-999c684f19a0"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="258" y="20" width="40" height="20" uuid="091603c0-1427-4631-8b43-6265b6e830af"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="515" y="20" width="40" height="20" uuid="4999a163-4dec-48df-8f36-c6fe5c98da87"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="350" y="20" width="40" height="20" uuid="e2bd62fa-78d8-4834-9056-055dbb13d33b"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="51" y="20" width="207" height="20" uuid="dc221e65-48ab-4c53-b47c-c7861ba809fc"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="468" y="20" width="47" height="20" uuid="acdd4c3c-b17e-4519-abb8-49dd1f359702"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="428" y="20" width="40" height="20" uuid="06ee8208-4744-41d8-856f-b28f9dd558c2"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="388" y="20" width="40" height="20" uuid="dc4a03f7-f4d7-4c6a-87c7-c2d47fb8e14d"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="14" y="0" width="37" height="20" uuid="eaaa3610-69d4-44dd-9636-c82661fdf7f3"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Kode]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="51" y="0" width="207" height="20" uuid="f71355b1-4a9a-4ff5-b22e-92dfd250c073"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mata Kuliah]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="258" y="0" width="40" height="20" uuid="c0e4bc02-2313-496e-bbe4-6088166df62a"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[SKS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="298" y="0" width="52" height="20" uuid="70ab6120-d48f-4874-b561-f71726ad476e"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Presensi]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="350" y="0" width="38" height="20" uuid="ff66cca2-1a1e-4bac-89f6-500a0efc93cc"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tugas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="390" y="0" width="38" height="20" uuid="163ff94a-0f5f-4288-abce-9c60a517aa95"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[UTS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="428" y="0" width="40" height="20" uuid="756c73af-5216-4514-b036-c5abb622f906"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[UAS]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="14" y="20" width="37" height="20" uuid="cc097e0b-a7d4-4e30-b7fc-8eb7cb313fe3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nim}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="51" y="20" width="207" height="20" uuid="05dd9723-230e-4233-b148-6d4e5fc86a9e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nmma_matkul}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="258" y="20" width="40" height="20" uuid="caf3d424-e844-45c1-bde9-03897de064b7"/>
+				<textFieldExpression><![CDATA[$V{sks_sum}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="468" y="20" width="47" height="20" uuid="c60597f5-2e38-495c-acca-d4fa7c4b6eda"/>
+				<textFieldExpression><![CDATA[$V{akhir}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="515" y="0" width="40" height="20" uuid="352f17cc-8d40-4db3-a8f6-001197ccf128"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Grade]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="468" y="0" width="47" height="20" uuid="8c58fdf7-bbbe-42f1-b61e-05391dbcfd17"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Akhir]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="303" y="22" width="100" height="20" uuid="d5450bf6-de05-4a69-b727-7cc5d09be126"/>
+				<textFieldExpression><![CDATA[$V{ips}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="515" y="22" width="100" height="20" uuid="56b81a6b-3357-450b-875c-47431a31d14b"/>
+				<textFieldExpression><![CDATA[$V{grade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="388" y="22" width="40" height="20" uuid="9bfe266f-de40-473f-a88c-9bb0105c7b5b"/>
+				<textFieldExpression><![CDATA[$F{uts}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="350" y="20" width="38" height="20" uuid="a84f81fe-ac5a-48b8-94c2-b4039f9d89cb"/>
+				<textFieldExpression><![CDATA[$V{mutu}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="428" y="20" width="40" height="20" uuid="be40af31-9288-46c4-888a-c8557dfdfae1"/>
+				<textFieldExpression><![CDATA[$F{uas}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="388" y="60" width="100" height="20" uuid="370c137e-ddc4-4ecb-8fc1-4c101492c0be"/>
+				<text><![CDATA[uts]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
