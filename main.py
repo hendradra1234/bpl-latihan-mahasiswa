@@ -4,6 +4,7 @@ from mahasiswa import Mahasiswa
 from matkul import Matkul
 from krs import KRS
 from nilai import Nilai
+import config
 
 from pyreportjasper import PyReportJasper
 from os.path import *
@@ -310,13 +311,13 @@ while True:
                                     params = {"nim": nim, "semester": semester, "thn_akademik": thn_akademik}
 
                                     mysql_conf = {
-                                        "driver": "mysql",
-                                        "username": "root",
-                                        "password": "",
-                                        "host": "localhost",
-                                        "database": "universitas",
-                                        "port": "3306",
-                                        "jdbc_driver": "com.mysql.cj.jdbc.Driver",
+                                        "driver": config.driver,
+                                        "username": config.username,
+                                        "password": config.password,
+                                        "host": config.host,
+                                        "database": config.database,
+                                        "port": config.port,
+                                        "jdbc_driver": config.jdbc_driver,
                                         "jdbc_dir": reports_dir
                                     }
                                     print("Membuat KHS...")
